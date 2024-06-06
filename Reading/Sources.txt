@@ -1,1 +1,3 @@
 https://www.sciencedirect.com/science/article/pii/S1877050920311972
+
+https://learnopencv.com/contour-detection-using-opencv-python-c/

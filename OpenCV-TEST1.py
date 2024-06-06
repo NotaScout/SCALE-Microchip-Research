@@ -19,6 +19,19 @@ image = cv2.imread(image_path)
 h,w = image.shape[:2]
 print("Height = {}, Width = {}".format(h, w))
 
+'''
+How to Contour trace (edge detect):
+Step 1
+read image <<< done
+Step 2
+Convert to greyscale
+Step 3
+Apply Binary Thresholding (WHat is that)
+Step 4
+findcontours () funciton
+Step 5
+Draw Contours on original input IMG
+'''
 ## delete // below this line //
 
 
