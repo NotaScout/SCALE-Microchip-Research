@@ -19,6 +19,14 @@ image = cv2.imread(image_path)
 h,w = image.shape[:2]
 print("Height = {}, Width = {}".format(h, w))
 
+
+'''
+THRESHOLDING
+ret, thresholded_image = cv.threshold(image, lower_threshold, upper_threshold,threshold_algorithm)
+I dont know what ret means exactly (return?)
+
+'''
+
 '''
 How to Contour trace (edge detect):
 Step 1
