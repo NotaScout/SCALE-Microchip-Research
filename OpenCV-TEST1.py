@@ -8,21 +8,28 @@ import numpy
 
 ## stuff we need
 
+#pip install opencv-python
+
 '''
 Defines
 '''
 
-lower_threshold = 127
+# input image here
+input_image = "image.jpg"
+
+lower_threshold = 100
 
 upper_threshold = 255
 
 
 # sets current file direcory as a variable
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
 print(ROOT_PATH)
 
 # appending file we want to process to the current dir
-image_path = ROOT_PATH + "\\" + "image.jpg"
+image_path = ROOT_PATH + "\\" + input_image
+
 print(image_path)
 
 # sends image data to image variable
@@ -41,6 +48,13 @@ cv2.waitKey(0)
 h,w = image.shape[:2]
 print("Height = {}, Width = {}".format(h, w))
 # return image, 
+
+'''
+THRESHOLDING
+ret, thresholded_image = cv.threshold(image, lower_threshold, upper_threshold,threshold_algorithm)
+I dont know what ret means exactly (return?)
+
+'''
 
 # thresholding the image
 ret, thresholded_image = cv2.threshold(grey_image, lower_threshold, upper_threshold, cv2.THRESH_BINARY)
@@ -66,12 +80,15 @@ cv2.waitKey(0)
 
 
 
-'''
-THRESHOLDING
-ret, thresholded_image = cv.threshold(image, lower_threshold, upper_threshold,threshold_algorithm)
-I dont know what ret means exactly (return?)
 
-'''
+
+# what we need:
+
+# contours from the source image
+
+# apply OCR
+
+
 
 '''
 How to Contour trace (edge detect):
@@ -80,13 +97,27 @@ read image <<< done
 Step 2
 Convert to greyscale <<< done
 Step 3
-Apply Binary Thresholding
+Apply Binary Thresholding <<< done
 >>> basically we need the processed image to be black and white
 Step 4
-findcontours () funciton
+findcontours () funciton << done
 Step 5
-Draw Contours on original input IMG
+Draw Contours on original input IMG <<< done
 '''
+
+
+'''
+To apply OCR (text detect)
+Step 1
+get nth contour 
+Step 2
+draw rect
+Step 3
+
+'''
+
+
+
 ## delete // below this line //
 
 
