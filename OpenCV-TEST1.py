@@ -6,16 +6,31 @@ import time
 
 import numpy
 
+import pytesseract
+
 ## stuff we need
 
 #pip install opencv-python
+#pip install pytesseract
+
+# to print a list of all environment varables:
+#print(os.environ)
 
 '''
 Defines
 '''
+#tesseract path
+#'C:\Users\scho3988\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+#so
+#os.environ["HOMEPATH"] + "\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe"
+
+pytesseract.pytesseract.tesseract_cmd = os.environ["HOMEDRIVE"]+os.environ["HOMEPATH"] + "\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe"
+
+
+
 
 # input image here
-input_image = "image.jpg"
+input_image = "demoIMG.png"
 
 lower_threshold = 100
 
@@ -63,7 +78,7 @@ cv2.imshow('Binary Threshold Applied', thresholded_image)
 cv2.waitKey(0)
 # Locate Contours
 # input. contours, hierarchy = cv.findContours(thresholded_img, contour retrival mode, contour approximation mode)
-contours, hierarchy = cv2.findContours(thresholded_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+exact_contours, hierarchy = cv2.findContours(thresholded_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 # is hierarcy 
 
 #cv2.imshow('Output',contours)
@@ -73,11 +88,20 @@ contours, hierarchy = cv2.findContours(thresholded_image, cv2.RETR_TREE, cv2.CHA
 #print("Raw Image Data = {}", format(contour_data))
  
  # third input arg is id, basically it specifies which contours to draw. -1 draws all
-image_contour = cv2.drawContours(image,contours,-1,127) 
-cv2.imshow("Contour", image_contour)
+print(pytesseract.image_to_string(image))
+exact_image_contour = cv2.drawContours(image,exact_contours,-1,127) 
+
+cv2.imshow("Exact Contour", exact_image_contour)
+
 cv2.waitKey(0)
 
+'''
+OCR
+'''
 
+recognized_text_file = open("recognized_text.txt","w+")
+recognized_text_file.write("") # clear file
+recognized_text_file.close()
 
 
 
