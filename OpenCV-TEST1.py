@@ -11,7 +11,7 @@ text display on image
 
 save recognized text to file
 
-
+finish rect dilation
 '''
 
 
@@ -38,8 +38,8 @@ import pytesseract
 TEST BOX
 '''
 
-rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(9,9))
-rectangle_kernel
+#rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(kernelsize,kernelsize))
+#rectangle_kernel
 
 # X Centroid: 
 # cx = int(M['m10']/M['m00'])
@@ -57,6 +57,10 @@ rectangle_kernel
 '''
 Defines
 '''
+
+# larger sizes detect more grouped words, ie sentences
+kernelsize = 20
+
 #tesseract path
 #'C:\Users\scho3988\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 #so
@@ -88,6 +92,7 @@ print(image_path)
 
 # sends image data to image variable
 original_image = cv2.imread(image_path)
+# all cv image functions are destructive as far as I'm aware #
 image = original_image.copy()
 
 # converts the image to greyscale
@@ -150,7 +155,7 @@ cv2.destroyAllWindows()
 
 # replace with increment in future
 # also another note: if we just do the 0th one, it appears to just capture the entire image. ie. (0,0,[image size])
-contour_count = exact_contours[2] # just takes the first contour
+contour_count = exact_contours[1] # just takes the first contour
 
 # then we need to extract the x,y coords as well as the width and height of the bounding box on our contour
 x,y,w,h = cv2.boundingRect(contour_count)
