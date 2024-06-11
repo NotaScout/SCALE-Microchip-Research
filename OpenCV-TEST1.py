@@ -1,3 +1,18 @@
+'''
+TODO:
+
+Make tesseract also install-able for all users (in addition to keeping the one user thing)
+
+rects around contour
+
+image stretching to get better results
+
+text display on image
+
+
+'''
+
+
 import cv2
 
 import os 
@@ -16,6 +31,27 @@ import pytesseract
 # to print a list of all environment varables:
 #print(os.environ)
 
+
+'''
+TEST BOX
+'''
+
+rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(9,9))
+rectangle_kernel
+
+# X Centroid: 
+# cx = int(M['m10']/M['m00'])
+# Y Centroid:
+# cy = int(M['m01']/M['m00'])
+
+
+
+'''
+</>
+
+'''
+
+
 '''
 Defines
 '''
@@ -24,6 +60,7 @@ Defines
 #so
 #os.environ["HOMEPATH"] + "\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe"
 
+# install for 1 user
 pytesseract.pytesseract.tesseract_cmd = os.environ["HOMEDRIVE"]+os.environ["HOMEPATH"] + "\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe"
 
 
@@ -52,7 +89,7 @@ image = cv2.imread(image_path)
 # converts the image to greyscale
 grey_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 # shows us a greyscale version of our orignal image
-cv2.imshow('ImageWindow', grey_image)
+#cv2.imshow('ImageWindow', grey_image)
 '''
 
 
@@ -74,7 +111,7 @@ I dont know what ret means exactly (return?)
 # thresholding the image
 ret, thresholded_image = cv2.threshold(grey_image, lower_threshold, upper_threshold, cv2.THRESH_BINARY)
 
-cv2.imshow('Binary Threshold Applied', thresholded_image)
+#cv2.imshow('Binary Threshold Applied', thresholded_image)
 cv2.waitKey(0)
 # Locate Contours
 # input. contours, hierarchy = cv.findContours(thresholded_img, contour retrival mode, contour approximation mode)
@@ -91,7 +128,7 @@ exact_contours, hierarchy = cv2.findContours(thresholded_image, cv2.RETR_TREE, c
 print(pytesseract.image_to_string(image))
 exact_image_contour = cv2.drawContours(image,exact_contours,-1,127) 
 
-cv2.imshow("Exact Contour", exact_image_contour)
+#cv2.imshow("Exact Contour", exact_image_contour)
 
 cv2.waitKey(0)
 
@@ -102,8 +139,16 @@ OCR
 recognized_text_file = open("recognized_text.txt","w+")
 recognized_text_file.write("") # clear file
 recognized_text_file.close()
+# <> net recognized text (control group)
 
+cv2.destroyAllWindows()
 
+# replace with increment in future
+contour_count = exact_contours[1] # just takes the first contour
+
+# then we need to extract the x,y coords as well as the width and height of the bounding box on our contour
+x,y,w,h = cv2.boundingRect(contour_count)
+print(cv2.boundingRect(contour_count))
 
 
 # what we need:
