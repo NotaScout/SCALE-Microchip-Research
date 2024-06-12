@@ -182,15 +182,14 @@ for count in 3:  # {
     contour_count = exact_contours[count]  # just takes the first contour
 
 # then we need to extract the x,y coords as well as the width and height of the bounding box on our contour
-x, y, w, h = cv2.boundingRect(contour_count)
-print(cv2.boundingRect(contour_count))
+    x, y, w, h = cv2.boundingRect(contour_count)
+    print(cv2.boundingRect(contour_count))
 
-bounding_box_test = cv2.rectangle(
-    original_image, (x, y), (x + w, y + h), (31, 255, 31), 3
-)
-cv2.imshow("Bounding Box", bounding_box_test)
+    bounding_box_test = cv2.rectangle(
+    original_image, (x, y), (x + w, y + h), (31, 255, 31), 3)
+    cv2.imshow("Bounding Box", bounding_box_test)
 # cv2.imshow('Original',original_image)
-cv2.waitKey(0)
+    cv2.waitKey(0)
 # }
 
 
