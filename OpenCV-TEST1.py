@@ -59,7 +59,7 @@ Defines
 '''
 
 # larger sizes detect more grouped words, ie sentences
-kernelsize = 20
+kernelsize = 5
 
 #tesseract path
 #'C:\Users\scho3988\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
@@ -70,6 +70,10 @@ kernelsize = 20
 pytesseract.pytesseract.tesseract_cmd = os.environ["HOMEDRIVE"]+os.environ["HOMEPATH"] + "\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe"
 
 
+rectangle_kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(kernelsize,kernelsize))
+
+# we need to apply a dilation to our image to "smooth" it out. Essentially we need the text to all be connected physically together for it
+# to register as 1 block of text.
 
 
 # input image here
@@ -95,6 +99,11 @@ original_image = cv2.imread(image_path)
 # all cv image functions are destructive as far as I'm aware #
 image = original_image.copy()
 
+h,w = image.shape[:2]
+
+print("Height = {}, Width = {}".format(h, w))
+
+
 # converts the image to greyscale
 grey_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 # shows us a greyscale version of our orignal image
@@ -103,11 +112,18 @@ grey_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
 '''
+
+
+# now we dilate the greyscale image
+
+dilation_image = cv2.dilate(grey_image,rectangle_kernel)
+
+cv2.imshow("{} by {} Dilation".format(kernelsize,kernelsize),dilation_image)
+
+
 # waits for keypress input to continue
 cv2.waitKey(0)
 
-h,w = image.shape[:2]
-print("Height = {}, Width = {}".format(h, w))
 # return image, 
 
 '''
