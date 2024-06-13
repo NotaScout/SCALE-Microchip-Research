@@ -12,6 +12,12 @@ text display on image
 save recognized text to file
 
 finish rect dilation
+
+Dynamic adjustment
+-threshold adjustment
+-dilation adjust
+
+
 """
 
 import cv2
