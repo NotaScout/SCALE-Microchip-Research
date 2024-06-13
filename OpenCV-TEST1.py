@@ -9,14 +9,13 @@ image stretching to get better results
 
 text display on image
 
-save recognized text to file
+save recognized text to file (Debug)
 
 finish rect dilation
 
 Dynamic adjustment
 -threshold adjustment
--dilation adjust
-
+-dilation adjust (kernelsize)
 
 """
 
@@ -65,6 +64,16 @@ Defines
 # larger sizes detect more grouped words, ie sentences
 kernelsize = 18
 
+# Write some Text
+
+font                   = cv2.FONT_HERSHEY_DUPLEX
+#bottomLeftCornerOfText = (x,y)
+fontScale              = 1
+fontColor              = (0,255,0)
+thickness              = 1
+lineType               = 2
+
+
 # tesseract path
 #'C:\Users\scho3988\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
 # so
@@ -111,7 +120,11 @@ h, w = image.shape[:2]
 
 print("Height = {}, Width = {}".format(h, w))
 
-
+# cv2.imshow('Text Test',cv2.putText(image,'text',(0,0),font, 
+#     fontScale,
+#     fontColor,
+#     thickness,
+#     lineType))
 # converts the image to greyscale
 grey_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 # shows us a greyscale version of our orignal image
@@ -154,6 +167,10 @@ cv2.waitKey(0)
 contours, hierarchy = cv2.findContours(
     dilation_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE
 )
+
+# Model data processing (this will do rudimatary processing by capturing the entire image)
+print(pytesseract.image_to_string(image))
+
 # is hierarcy
 
 # cv2.imshow('Output',contours)
@@ -163,7 +180,9 @@ contours, hierarchy = cv2.findContours(
 # print("Raw Image Data = {}", format(contour_data))
 
 # third input arg is id, basically it specifies which contours to draw. -1 draws all
-print(pytesseract.image_to_string(image))
+
+
+
 image_contours = cv2.drawContours(image, contours, -1, (31, 255, 31))
 
 
@@ -190,18 +209,28 @@ for count in range(len(contours)):  # {
     # then we need to extract the x,y coords as well as the width and height of the bounding box on our contour
     x, y, w, h = cv2.boundingRect(contour_count)
     print(cv2.boundingRect(contour_count))
-
+    cropped_image = original_image[y : y + h, x : x + w]
+    cv2.imshow('Cropped',cropped_image)
+    # now we can feed each individual cropped image into OCR to be processed
+    detected_word = pytesseract.image_to_string(cropped_image)
     bounding_box_test = cv2.rectangle(
-    original_image, (x, y), (x + w, y + h), (31, 255, 31), 3)
-    cv2.imshow("Bounding Box", bounding_box_test)# cv2.imshow('Original',original_image)
+        original_image, (x, y), (x + w, y + h), (31, 255, 31), 3
+    )
+    cv2.putText(bounding_box_test,'{}:{}'.format(str(count),detected_word),(x,y),font, 
+    fontScale,
+    fontColor,
+    thickness,
+    lineType)
+
+
+    cv2.imshow(
+        "Bounding Box", bounding_box_test
+    )  # cv2.imshow('Original',original_image)
     cv2.waitKey(0)
+
+
+
 # }
-
-cropped_image = original_image[y : y + h, x : x + w]
-# cv2.imshow('Cropped',cropped_image)
-
-
-# now we can feed each individual cropped image into OCR to be processed
 
 
 # cv2.waitKey(0)
