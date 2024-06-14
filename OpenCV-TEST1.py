@@ -211,12 +211,23 @@ for count in range(len(contours)):  # {
     print(cv2.boundingRect(contour_count))
     cropped_image = original_image[y : y + h, x : x + w]
     cv2.imshow('Cropped',cropped_image)
+    cx = x+(w/2)
+    cy = y+(h/2)
+    
+    #centroid_image_test = cv2.circle(image,(int(cx),int(cy)),1,(0,240,0),4) << just draws a centroid on our text
+
+        # X Centroid:
+    # cx = int(M['m10']/M['m00']) --> (xcoord+(width/2))
+    # Y Centroid:
+    # cy = int(M['m01']/M['m00']) --> (ycoord+(height/2))
+
+
     # now we can feed each individual cropped image into OCR to be processed
     detected_word = pytesseract.image_to_string(cropped_image)
     bounding_box_test = cv2.rectangle(
         original_image, (x, y), (x + w, y + h), (31, 255, 31), 3
     )
-    cv2.putText(bounding_box_test,'{}:{}'.format(str(count),detected_word),(x,y),font, 
+    cv2.putText(bounding_box_test,'{}:{}'.format(str(count),detected_word),(int(cx+w+5),int(cy)),font, 
     fontScale,
     fontColor,
     thickness,
