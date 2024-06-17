@@ -8,7 +8,6 @@ rects around contour
 image stretching to get better results
 
 text display on image
-
 save recognized text to file (Debug)
 
 finish rect dilation
