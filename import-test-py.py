@@ -10,5 +10,6 @@ image_path = cv2import.Current_Directory_Import("demoIMG.png")
 
 print("Image Path {}".format(image_path))
 
+print("Model {}".format(cv2import.Select_Model("")))
 
 

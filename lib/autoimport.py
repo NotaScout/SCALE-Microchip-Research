@@ -17,4 +17,16 @@ def Current_Directory_Import(filename):
 
 #Current_Directory_Import("image.jpg")
 
+def Select_Model(modelname):
+    #input AI modelname
+    match modelname:
+        case "tesseract":
+            return "TESSERACTPATH"
+        case "test1":
+            return 2
+        case _:
+            print("Invalid Model Provided")
+            return 0
+
+
 
