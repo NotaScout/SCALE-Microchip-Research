@@ -1,7 +1,16 @@
 import os
 import cv2
 
+
 #simple importer
+
+#default models:
+
+pytesseract.pytesseract.tesseract_cmd = (
+    os.environ["HOMEDRIVE"]
+    + os.environ["HOMEPATH"]
+    + "\\AppData\\Local\\Programs\\Tesseract-OCR\\tesseract.exe"
+)
 
 def Current_Directory_Import(filename):
     # sets current file direcory as a variable
